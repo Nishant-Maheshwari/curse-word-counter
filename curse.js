@@ -1,5 +1,6 @@
 let textInput = document.getElementById("textInput");
 let button = document.getElementById("submitBtn"); 
+let div = document.createElement('div')
 let curseWords = ['cunt','fuck','bitch']
 let curseCounter = 0
 let obj = {
@@ -15,6 +16,9 @@ button.addEventListener("click", () => {
   }
     
   }
+  div.innerHTML = `<div>curse count : ${curseCounter}</div>
+  <div>curse word</div>`
+  document.body.append(div)
   console.log(curseCounter);
   console.log(obj);
   
