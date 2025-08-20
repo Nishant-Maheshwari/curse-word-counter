@@ -18,17 +18,23 @@ let obj = {};
   }
     
   }
- let wordListArr = []
-  for(let [word,count] of Object.entries(obj)){
-    // let word = entries[0];
-    // let count = entries[1];
-    wordListArr.push(`${word}(${count})`) 
-    console.log(wordListArr);
+//  let wordListArr = []
+//   for(let [word,count] of Object.entries(obj)){
+//     // let word = entries[0];
+//     // let count = entries[1];
+//     wordListArr.push(`${word}(${count})`) 
+//     console.log(wordListArr);
     
     
-  }
+//   }
+let wordListArr = Object.entries(obj)
+.map(([word , count]) => {
+  return `${word}(${count})`})
+.join(", ")
+
+
   div.innerHTML = `<div>curse count : ${curseCounter}</div>
-  <div>curse words use :${wordListArr.join("| ")}</div>`
+  <div>curse words use :${wordListArr}</div>`
   document.body.append(div)
   // console.log(curseCounter);
   // console.log(obj);
