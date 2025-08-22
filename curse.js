@@ -1,18 +1,23 @@
 let textInput = document.getElementById("textInput");
 let button = document.getElementById("submitBtn"); 
-let div = document.createElement('div')
+let historyBtn = document.getElementById("historyBtn")
+let div  = document.createElement('div')
+let div2 = document.createElement('div')
 let curseWords = ['cunt','fuck','bitch']
 
 let wordUsed = []
-
+let storedObj = {}
 
 button.addEventListener("click", () => {
   let curseCounter = 0;
-let obj = {};
+  let obj = {};
+  
   let words = textInput.value.toLowerCase().trim().split(/\s+/);
   for(let word of words){
   if(curseWords.includes(word)){
   storeWords(word,obj)
+  saveTotalWords(word)
+  
   curseCounter++
   wordUsed.push(word)
   }
@@ -30,7 +35,7 @@ let obj = {};
 let wordListArr = Object.entries(obj)
 .map(([word , count]) => {
   return `${word}(${count})`})
-.join(", ")
+.join("| ")
 
 
   div.innerHTML = `<div>curse count : ${curseCounter}</div>
@@ -43,7 +48,16 @@ let wordListArr = Object.entries(obj)
  
   
 }) 
-
+historyBtn.addEventListener("click",() => {
+  let historyList = Object.entries(storedObj)
+  .map(([word,count])=>{
+    return `you have used ${word} ${count} times`
+  }).join(" and ") 
+  div2.innerHTML = `<div>${historyList}</div>
+  <div>total curse words used : ${wordUsed.length}</div>
+  <div>curse words sequence : ${wordUsed.join(", ")}</div>`
+  document.body.append(div2)
+})
 
 
 function storeWords(word,obj){
@@ -52,4 +66,12 @@ if(obj[word]){
 }else{
   obj[word] = 1
 }
+}
+function saveTotalWords(word){
+if(storedObj[word]){
+  storedObj[word]++
+}else{
+  storedObj[word] = 1
+}
+
 }
