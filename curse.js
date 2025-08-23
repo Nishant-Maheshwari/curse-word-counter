@@ -2,9 +2,12 @@ let textInput = document.getElementById("textInput");
 let button = document.getElementById("submitBtn"); 
 let historyBtn = document.getElementById("historyBtn")
 let div  = document.createElement('div')
+document.body.append(div)
 let div2 = document.createElement('div')
+document.body.append(div2)
 let curseWords = ['cunt','fuck','bitch']
-
+let hiddenCurseCounter = 0
+textInput.disabled = false
 let wordUsed = []
 let storedObj = {}
 
@@ -18,10 +21,15 @@ button.addEventListener("click", () => {
   storeWords(word,obj)
   saveTotalWords(word)
   
+  hiddenCurseCounter++
   curseCounter++
   wordUsed.push(word)
   }
     
+  }
+  if(disableInput()){
+    textInput.value = ""
+    return
   }
 //  let wordListArr = []
 //   for(let [word,count] of Object.entries(obj)){
@@ -40,7 +48,7 @@ let wordListArr = Object.entries(obj)
 
   div.innerHTML = `<div>curse count : ${curseCounter}</div>
   <div>curse words use :${wordListArr}</div>`
-  document.body.append(div)
+  
   // console.log(curseCounter);
   // console.log(obj);
   
@@ -48,6 +56,18 @@ let wordListArr = Object.entries(obj)
  
   
 }) 
+function disableInput(){
+if (hiddenCurseCounter >= 10){
+  div.innerHTML = `you have used to many curse word u cant use the textInput for 10 seconds`
+  textInput.disabled = true;
+  setTimeout(()=>{
+ textInput.disabled = false
+ div.innerHTML = `Ready to use again`
+  },10000)
+return true}
+return false
+}
+
 historyBtn.addEventListener("click",() => {
   let historyList = Object.entries(storedObj)
   .map(([word,count])=>{
@@ -56,7 +76,7 @@ historyBtn.addEventListener("click",() => {
   div2.innerHTML = `<div>${historyList}</div>
   <div>total curse words used : ${wordUsed.length}</div>
   <div>curse words sequence : ${wordUsed.join(", ")}</div>`
-  document.body.append(div2)
+  
 })
 
 
