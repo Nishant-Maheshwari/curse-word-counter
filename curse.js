@@ -58,12 +58,25 @@ let wordListArr = Object.entries(obj)
 }) 
 function disableInput(){
 if (hiddenCurseCounter >= 10){
-  div.innerHTML = `you have used to many curse word u cant use the textInput for 10 seconds`
-  textInput.disabled = true;
-  setTimeout(()=>{
- textInput.disabled = false
- div.innerHTML = `Ready to use again`
-  },10000)
+//   div.innerHTML = `you have used to many curse word u cant use the textInput for 10 seconds`
+//   textInput.disabled = true;
+//   setTimeout(()=>{
+//  textInput.disabled = false
+//  hiddenCurseCounter = 0
+//  div.innerHTML = `Ready to use again`
+//   },10000)
+let timeOut = 11;
+textInput.disabled = true
+let timer = setInterval(()=>{
+  timeOut--;
+  div.innerHTML = `you have used to many curse word u cant use the textInput for ${timeOut}`
+  if(timeOut <= 0){
+    clearInterval(timer);
+    textInput.disabled = false;
+    hiddenCurseCounter = 0;
+    div.innerHTML = `Ready to use again`
+  }
+},1000 )
 return true}
 return false
 }
